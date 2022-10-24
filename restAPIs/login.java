@@ -1,4 +1,5 @@
 package restAPIs;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -8,6 +9,7 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 public class login {
+	private static String token;
 	public static void main(String args[]) {
 		String body = "{\r\n"
 				+ "  \"username\": \"bhanu.prakash+1@lji.io\",\r\n"
@@ -38,8 +40,18 @@ public class login {
 			e.printStackTrace();
 		}
 		
-		System.out.println(log.body());
-		System.out.println(log.statusCode());
-		
+        token = log.body();
+        try
+        {
+            String filename= "MyFile.txt";
+            FileWriter fw = new FileWriter(filename,false); //the true will append the new data
+            fw.write(token);//appends the string to the file
+            fw.close();
+        }
+        catch(IOException ioe)
+        {
+            System.err.println("IOException: " + ioe.getMessage());
+        }
+		System.out.println("I am done added to memeory");
 	}
     }
